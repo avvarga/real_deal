@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/travel_buddy/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/travel_buddy/styles.css' %}">
+    <title>Login/Registration</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div id="register" class="form-group">
+            <h2>Register:</h2>
+            <form class="form" action="/register" method="post">
+                {% csrf_token %}
+                <label for="name">Name: <input type="text" name="name" id="name"></label>
+                <label for="username">Username: <input type="text" name="username" id="username"></label>
+                <label for="password">Password: <input type="password" name="password" id="password"></label>
+                <label for="pwd_confirm">Password Confirmation: <input type="password" name="pwd_confirm" id="pwd_confirm"></label>
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <div id="login">
+            <h2>Log In:</h2>
+            <form class="form" action="/login" method="post">
+                {% csrf_token %}
+                <label for="username">Username: <input type="username" name="username" id="username"></label>
+                <label for="password">Password: <input type="password" name="password" id="password"></label>
+                <input type="submit" value="Log In">
+            </form>
+        </div>
+    </div>
+    {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

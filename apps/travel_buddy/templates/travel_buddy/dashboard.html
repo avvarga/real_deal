@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/travel_buddy/skeleton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/travel_buddy/styles.css' %}">
+    <title>Travel Dashboard</title>
+</head>
+<body>
+    <div id="top">
+        <p id="welcome">Welcome, {{ request.session.user }}!</p>
+        <a href="/logout">Logout</a>
+    </div>
+    <hr>
+    <div id="content">
+        <div id="my_list">
+            <h5>Your Trip Schedules</h5>
+            <table>
+                <thead>
+                    <th>Destination</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Plan</th>
+                </thead>
+                <tbody>
+                    {% if trips %}
+                        {% for trip in trips %}
+                            <tr>
+                                <td><a href="/travels/{{ trip.id }}"> {{ trip.destination }}</a></td>
+                                <td>{{ trip.travel_from }}</td>
+                                <td>{{ trip.travel_to }}</td>
+                                <td>{{ trip.description }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <hr>
+        <div id="other_list">
+            <h5>Other User's Travel Plans</h5>
+            <table>
+                <thead>
+                    <th>Name</th>
+                    <th>Destination</th>
+                    <th>Travel Start Date</th>
+                    <th>Travel End Date</th>
+                    <th>Do You Want to Join?</th>
+                </thead>
+                <tbody>
+                    {% if others %}
+                        {% for other in others %}
+                            <tr>
+                                <td>{{ other.user.name }}</td>
+                                <td><a href="/travels/{{ other.id }}">{{ other.destination }}</a></td>
+                                <td>{{ other.travel_from }}</td>
+                                <td>{{ other.travel_to }}</td>
+                                <td><a href="/travels/{{ other.id }}/join">Join</a></td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a href="/travels/create">Add Travel Plan</a>
+</body>
+</html>
